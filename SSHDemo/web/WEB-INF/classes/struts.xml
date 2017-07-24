@@ -7,8 +7,11 @@
 <struts>
     <constant name="struts.objectFactory" value="spring" />
     <package name="default" extends="struts-default">
-        <action name="helloWorld" class="helloWorldBean">
-            <result name="success">/new.jsp</result>
-        </action>
+
+    <action name="login" class="Action.loginAction">
+        <result name="success">/success.jsp</result>
+        <result name="failer">/error.jsp</result>
+    </action>
+
     </package>
 </struts>

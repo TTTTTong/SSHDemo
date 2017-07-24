@@ -3,11 +3,14 @@ package DaoImpl;
 import Dao.userDao;
 import Entity.user;
 import org.hibernate.Query;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
-
+import org.springframework.orm.hibernate4.HibernateTemplate;
 import java.util.List;
 
-public class userDaoImpl extends HibernateDaoSupport implements userDao {
+public class userDaoImpl implements userDao {
+    private HibernateTemplate hibernateTemplate;
+    public void setHibernateTemplate(HibernateTemplate hibernateTemplate) {
+        this.hibernateTemplate = hibernateTemplate;
+    }
     public void save(user user){
         this.getHibernateTemplate().save(user);
     }

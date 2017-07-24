@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:http="http://www.springframework.org/schema/c"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/aop
+           http://www.srringframework.org/schema/aop/spring-aop-3.0.xsd"
+        >
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
         <property name="url" value="jdbc:mysql://localhost:3306/test"/>
@@ -12,8 +19,9 @@
     <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="mappingResources">
+            <!-- 或者用mappingLocations     *.hbm.xml-->
             <list>
-                <value>classpath:Entity/user.hbm.xml</value>
+                <value>Entity/user.hbm.xml</value>
             </list>
         </property>
         <!-- 设置Hibernate属性-->
@@ -26,7 +34,14 @@
         </property>
     </bean>
 
+    <bean id="userDao" class="DaoImpl.userDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
     <bean id="userService" class="Service.Impl.userServiceImpl">
         <property name="userDao" ref="userDao"/>
+    </bean>
+    <bean id="loginAction" class="Action.loginAction">
+        <property name="UserService" ref="userService"/>
     </bean>
 </beans>
