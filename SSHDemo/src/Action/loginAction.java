@@ -44,10 +44,10 @@ public class loginAction extends ActionSupport{
 
     public String execute()
     {
-        List<user> list = UserService.findAll();
+        List<?> list = UserService.findAll(username);
 
         user u = new user();
-        Iterator<user> it = list.iterator();
+        Iterator<?> it = list.iterator();
 
         while(it.hasNext())
         {
@@ -65,5 +65,11 @@ public class loginAction extends ActionSupport{
         }
         String page = "failer";
         return  page;
+//        user u = UserService.getUser(username);
+//        if (u.getPassword().trim().equals(password.trim())
+//                && u.getType().equals(usertype.trim()))
+//            return "success";
+//        else
+//            return "failer";
     }
 }

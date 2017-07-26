@@ -3,7 +3,6 @@ package DaoImpl;
 import Dao.userDao;
 import Entity.user;
 import org.hibernate.Query;
-import org.hibernate.SessionFactory;
 import org.springframework.orm.hibernate4.HibernateTemplate;
 
 import java.util.ArrayList;
@@ -13,8 +12,8 @@ public class userDaoImpl implements userDao {
 
     private HibernateTemplate hibernateTemplate;
 
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.hibernateTemplate = new HibernateTemplate(sessionFactory);
+    public void setHibernateTemplate(HibernateTemplate hibernateTemplate){
+        this.hibernateTemplate = hibernateTemplate;
     }
 
     public void save(user user){
@@ -24,8 +23,8 @@ public class userDaoImpl implements userDao {
     @Override
     public user getUser(String user) {
         String hql = "from user u where u.name = '"+user+"'";
-        user result = (user)((Query)this.hibernateTemplate.find(hql)).uniqueResult();
-        return  result;
+        user user1 = (user)(this.hibernateTemplate.find(hql));
+        return  user1;
     }
 
     @Override
@@ -45,10 +44,13 @@ public class userDaoImpl implements userDao {
     }
 
     @Override
-    public List<user> findAll() {
-        String query = "from user";
-        List<user> list = new ArrayList<>();
-        //List<user> list = this.hibernateTemplate.find(query);
+    public List<?> findAll(String username) {
+//        String quert = "from uesr";
+//        Session session = hibernateTemplate.getSessionFactory().getCurrentSession();
+//        List<user> list = session.
+        String hql = "from user u where u.name = '"+username+"'";
+//        List<user> list = (user)(this.hibernateTemplate.find(hql));
+        List<?> list= this.hibernateTemplate.find(hql);
         return list;
     }
 }
