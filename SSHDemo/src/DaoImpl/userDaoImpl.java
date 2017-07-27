@@ -2,10 +2,7 @@ package DaoImpl;
 
 import Dao.userDao;
 import Entity.user;
-import org.hibernate.Query;
 import org.springframework.orm.hibernate4.HibernateTemplate;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class userDaoImpl implements userDao {
@@ -44,13 +41,9 @@ public class userDaoImpl implements userDao {
     }
 
     @Override
-    public List<?> findAll(String username) {
-//        String quert = "from uesr";
-//        Session session = hibernateTemplate.getSessionFactory().getCurrentSession();
-//        List<user> list = session.
-        String hql = "from user u where u.name = '"+username+"'";
-//        List<user> list = (user)(this.hibernateTemplate.find(hql));
-        List<?> list= this.hibernateTemplate.find(hql);
+    public List<user> findAll() {
+        String hql = "from user";
+        List<user> list= (List<user>) this.hibernateTemplate.find(hql);
         return list;
     }
 }

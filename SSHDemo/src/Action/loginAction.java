@@ -44,32 +44,19 @@ public class loginAction extends ActionSupport{
 
     public String execute()
     {
-        List<?> list = UserService.findAll(username);
+        List<user> list = UserService.findAll();
 
         user u = new user();
-        Iterator<?> it = list.iterator();
+        Iterator<user> it = list.iterator();
 
         while(it.hasNext())
         {
-            u = (user)it.next();
+            u = it.next();
             if (username.trim().equals(u.getName().trim())
                     && password.trim().equals(u.getPassword().trim())
                     &&usertype.equals(u.getType()))
-            {
                 return "success";
-            }
-            else
-            {
-                return "failer";
-            }
         }
-        String page = "failer";
-        return  page;
-//        user u = UserService.getUser(username);
-//        if (u.getPassword().trim().equals(password.trim())
-//                && u.getType().equals(usertype.trim()))
-//            return "success";
-//        else
-//            return "failer";
+        return "failer";
     }
 }

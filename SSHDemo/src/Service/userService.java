@@ -10,5 +10,5 @@ public interface userService {
     void delete(int id);
     void update(user user);
     user findById(int id);
-    List<?> findAll(String username);
+    List<user> findAll();
 }
