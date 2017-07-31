@@ -13,5 +13,8 @@
         <result name="failer">/error.jsp</result>
     </action>
 
+    <action name="userQuery" class="userQueryAction">
+        <result name="success">/query.jsp</result>
+    </action>
     </package>
 </struts>

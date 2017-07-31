@@ -60,5 +60,6 @@
     <orderEntry type="library" name="Spring" level="project" />
     <orderEntry type="library" name="Hibernate" level="project" />
     <orderEntry type="library" name="Mysql" level="project" />
+    <orderEntry type="library" name="Tomcat" level="project" />
   </component>
 </module>

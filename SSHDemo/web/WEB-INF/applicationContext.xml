@@ -46,11 +46,15 @@
     <bean id="userDao" class="DaoImpl.userDaoImpl">
         <property name="hibernateTemplate" ref="hibernateTemplate"/>
     </bean>
-
     <bean id="userService" class="Service.Impl.userServiceImpl">
         <property name="userDao" ref="userDao"/>
     </bean>
+
+    <!--ACtion -->
     <bean id="loginAction" class="Action.loginAction">
         <property name="UserService" ref="userService"/>
+    </bean>
+    <bean id="userQueryAction" class="Action.userQuertyAction">
+        <property name="userService" ref="userService"/>
     </bean>
 </beans>

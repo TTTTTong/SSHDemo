@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Tomcat">
+    <CLASSES>
+      <root url="file://D:/Eclipse环境/apache-tomcat-8.5.16/lib" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="file://D:/Eclipse环境/apache-tomcat-8.5.16/lib" recursive="false" />
+  </library>
+</component>
