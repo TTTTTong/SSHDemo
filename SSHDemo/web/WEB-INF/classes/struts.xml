@@ -16,5 +16,9 @@
     <action name="userQuery" class="userQueryAction">
         <result name="success">/query.jsp</result>
     </action>
+
+    <action name="addUser" class="Action.userAction">
+        <result name="success" type="redirect">/userQuery.action</result>
+    </action>
     </package>
 </struts>

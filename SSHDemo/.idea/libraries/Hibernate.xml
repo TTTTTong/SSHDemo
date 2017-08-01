@@ -1,5 +1,5 @@
 <component name="libraryTable">
-  <library name="Hibernate" type="hibernate">
+  <library name="hibernate">
     <CLASSES>
       <root url="jar://D:/Eclipse环境/hibernate-release-4.2.4.Final/hibernate-release-4.2.4.Final/lib/合并/antlr-2.7.7.jar!/" />
       <root url="jar://D:/Eclipse环境/hibernate-release-4.2.4.Final/hibernate-release-4.2.4.Final/lib/合并/c3p0-0.9.2.1.jar!/" />
@@ -25,15 +25,17 @@
       <root url="jar://D:/Eclipse环境/hibernate-release-4.2.4.Final/hibernate-release-4.2.4.Final/lib/合并/jboss-transaction-api_1.1_spec-1.0.1.Final.jar!/" />
       <root url="jar://D:/Eclipse环境/hibernate-release-4.2.4.Final/hibernate-release-4.2.4.Final/lib/合并/jgroups-3.2.0.CR1.jar!/" />
       <root url="jar://D:/Eclipse环境/hibernate-release-4.2.4.Final/hibernate-release-4.2.4.Final/lib/合并/mchange-commons-java-0.2.3.4.jar!/" />
-      <root url="jar://D:/Eclipse环境/hibernate-release-4.2.4.Final/hibernate-release-4.2.4.Final/lib/合并/org.osgi.core-4.3.1.jar!/" />
       <root url="jar://D:/Eclipse环境/hibernate-release-4.2.4.Final/hibernate-release-4.2.4.Final/lib/合并/proxool-0.8.3.jar!/" />
       <root url="jar://D:/Eclipse环境/hibernate-release-4.2.4.Final/hibernate-release-4.2.4.Final/lib/合并/rhq-pluginAnnotations-3.0.4.jar!/" />
       <root url="jar://D:/Eclipse环境/hibernate-release-4.2.4.Final/hibernate-release-4.2.4.Final/lib/合并/slf4j-api-1.6.1.jar!/" />
       <root url="jar://D:/Eclipse环境/hibernate-release-4.2.4.Final/hibernate-release-4.2.4.Final/lib/合并/stax2-api-3.1.1.jar!/" />
       <root url="jar://D:/Eclipse环境/hibernate-release-4.2.4.Final/hibernate-release-4.2.4.Final/lib/合并/staxmapper-1.1.0.Final.jar!/" />
       <root url="jar://D:/Eclipse环境/hibernate-release-4.2.4.Final/hibernate-release-4.2.4.Final/lib/合并/woodstox-core-asl-4.1.1.jar!/" />
+      <root url="jar://D:/Eclipse环境/hibernate-release-4.2.4.Final/hibernate-release-4.2.4.Final/lib/合并/org.osgi.core-4.3.1.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://D:/Eclipse环境/hibernate-release-4.2.4.Final/hibernate-release-4.2.4.Final/lib/合并/org.osgi.core-4.3.1.jar!/OSGI-OPT/src" />
+    </SOURCES>
   </library>
 </component>

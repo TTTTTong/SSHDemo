@@ -1,10 +1,30 @@
 <component name="libraryTable">
-  <library name="Tomcat">
+  <library name="tomcat">
     <CLASSES>
-      <root url="file://D:/Eclipse环境/apache-tomcat-8.5.16/lib" />
+      <root url="jar://D:/Eclipse环境/apache-tomcat-8.5.16/lib/annotations-api.jar!/" />
+      <root url="jar://D:/Eclipse环境/apache-tomcat-8.5.16/lib/catalina-ant.jar!/" />
+      <root url="jar://D:/Eclipse环境/apache-tomcat-8.5.16/lib/catalina-ha.jar!/" />
+      <root url="jar://D:/Eclipse环境/apache-tomcat-8.5.16/lib/catalina-storeconfig.jar!/" />
+      <root url="jar://D:/Eclipse环境/apache-tomcat-8.5.16/lib/catalina-tribes.jar!/" />
+      <root url="jar://D:/Eclipse环境/apache-tomcat-8.5.16/lib/catalina.jar!/" />
+      <root url="jar://D:/Eclipse环境/apache-tomcat-8.5.16/lib/ecj-4.6.3.jar!/" />
+      <root url="jar://D:/Eclipse环境/apache-tomcat-8.5.16/lib/el-api.jar!/" />
+      <root url="jar://D:/Eclipse环境/apache-tomcat-8.5.16/lib/jasper-el.jar!/" />
+      <root url="jar://D:/Eclipse环境/apache-tomcat-8.5.16/lib/jasper.jar!/" />
+      <root url="jar://D:/Eclipse环境/apache-tomcat-8.5.16/lib/jaspic-api.jar!/" />
+      <root url="jar://D:/Eclipse环境/apache-tomcat-8.5.16/lib/jsp-api.jar!/" />
+      <root url="jar://D:/Eclipse环境/apache-tomcat-8.5.16/lib/servlet-api.jar!/" />
+      <root url="jar://D:/Eclipse环境/apache-tomcat-8.5.16/lib/tomcat-api.jar!/" />
+      <root url="jar://D:/Eclipse环境/apache-tomcat-8.5.16/lib/tomcat-coyote.jar!/" />
+      <root url="jar://D:/Eclipse环境/apache-tomcat-8.5.16/lib/tomcat-dbcp.jar!/" />
+      <root url="jar://D:/Eclipse环境/apache-tomcat-8.5.16/lib/tomcat-jdbc.jar!/" />
+      <root url="jar://D:/Eclipse环境/apache-tomcat-8.5.16/lib/tomcat-jni.jar!/" />
+      <root url="jar://D:/Eclipse环境/apache-tomcat-8.5.16/lib/tomcat-util-scan.jar!/" />
+      <root url="jar://D:/Eclipse环境/apache-tomcat-8.5.16/lib/tomcat-util.jar!/" />
+      <root url="jar://D:/Eclipse环境/apache-tomcat-8.5.16/lib/tomcat-websocket.jar!/" />
+      <root url="jar://D:/Eclipse环境/apache-tomcat-8.5.16/lib/websocket-api.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
-    <jarDirectory url="file://D:/Eclipse环境/apache-tomcat-8.5.16/lib" recursive="false" />
   </library>
 </component>
