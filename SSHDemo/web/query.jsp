@@ -29,7 +29,8 @@
             <td align="center"><s:property value="#st.name"/>
             <td align="center"><s:property value="#st.password"/>
             <td align="center"><s:property value="#st.type"/>
-            <td><a href="userdelete.action?id=<s:property value='#st.id'/> ">delete</a></td>
+            <td><a href="deleteUser.action?id=<s:property value='#st.id'/> ">delete</a></td>
+            <td><a href="update.jsp?id=<s:property value='#st.id'/>">update</a> </td>
             </tr>
         </s:iterator>
     </table>

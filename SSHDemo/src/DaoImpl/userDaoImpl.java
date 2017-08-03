@@ -2,6 +2,7 @@ package DaoImpl;
 
 import Dao.userDao;
 import Entity.user;
+import org.hibernate.Session;
 import org.springframework.orm.hibernate4.HibernateTemplate;
 import java.util.List;
 
@@ -13,8 +14,13 @@ public class userDaoImpl implements userDao {
         this.hibernateTemplate = hibernateTemplate;
     }
 
+    @Override
     public void save(user user){
-        this.hibernateTemplate.save(user);
+        //this.hibernateTemplate.save(user);
+        Session session = this.hibernateTemplate.getSessionFactory().openSession();
+        session.save(user);
+        session.flush();
+        session.close();
     }
 
     @Override
@@ -26,12 +32,20 @@ public class userDaoImpl implements userDao {
 
     @Override
     public void delete(int id) {
-        this.hibernateTemplate.delete(findById(id));
+        //this.hibernateTemplate.delete(findById(id));
+        Session session = this.hibernateTemplate.getSessionFactory().openSession();
+        session.delete(findById(id));
+        session.flush();
+        session.close();
     }
 
     @Override
     public void update(user user) {
-        this.hibernateTemplate.update(user);
+       //this.hibernateTemplate.update(user);
+        Session session = this.hibernateTemplate.getSessionFactory().openSession();
+        session.update(user);
+        session.flush();
+        session.close();
     }
 
     @Override

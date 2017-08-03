@@ -130,5 +130,6 @@
     <orderEntry type="library" name="tomcat" level="project" />
     <orderEntry type="library" name="mysql-connector-java-5.1.42-bin" level="project" />
     <orderEntry type="library" name="hibernate" level="project" />
+    <orderEntry type="library" name="spring" level="project" />
   </component>
 </module>
