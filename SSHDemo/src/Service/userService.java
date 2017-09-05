@@ -1,9 +1,11 @@
 package Service;
 
 import Entity.user;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Transactional
 public interface userService {
     void save(user user);
     user getUser(String user);

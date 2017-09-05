@@ -2,6 +2,7 @@ package Service.Impl;
 import Dao.userDao;
 import Entity.user;
 import Service.userService;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 

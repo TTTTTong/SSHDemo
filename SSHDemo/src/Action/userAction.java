@@ -3,6 +3,7 @@ package Action;
 import Entity.user;
 import Service.userService;
 import com.opensymphony.xwork2.ActionSupport;
+import org.springframework.stereotype.Controller;
 
 public class userAction extends ActionSupport{
     private userService UserService;

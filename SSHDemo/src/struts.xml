@@ -8,7 +8,7 @@
     <constant name="struts.objectFactory" value="spring" />
     <package name="default" extends="struts-default">
 
-    <action name="login" class="Action.loginAction">
+    <action name="login" class="loginAction">
         <result name="success">/success.jsp</result>
         <result name="failer">/error.jsp</result>
     </action>
@@ -17,15 +17,15 @@
         <result name="success">/query.jsp</result>
     </action>
 
-    <action name="addUser" class="Action.userAction">
+    <action name="addUser" class="userAction">
         <result name="success" type="redirect">/userQuery.action</result>
     </action>
 
-    <action name="deleteUser" class="Action.deleteUserAction">
+    <action name="deleteUser" class="deleteUserAction">
         <result name="success" type="redirect">/userQuery.action</result>
     </action>
 
-    <action name="updateUser" class="Action.updateUserAction">
+    <action name="updateUser" class="updateUserAction">
         <result name="success" type="redirect">/userQuery.action</result>
         <result name="input">/update.jsp</result>
     </action>

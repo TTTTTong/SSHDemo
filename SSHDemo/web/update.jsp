@@ -20,11 +20,10 @@
                 <s:actionerror/>
             </td>
         </tr>
-
+        <s:label name="user.id" key="ID"
+                     value="%{#parameters.id}" required="true"></s:label>
         <s:textfield name="user.name" key="用户名"
-                     tooltip="Enter name" required="true"></s:textfield>
-        <s:textfield name="user.id" key="ID"
-                     tooltip="Enter your id" required="true"></s:textfield>
+                     tooltip="Enter your name" required="true"></s:textfield>
         <s:textfield name="user.password" key="密码"
                      tooltip="Enter password" required="true"></s:textfield>
         <s:textfield name="user.type" key="类型"
