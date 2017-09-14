@@ -1,192 +1,195 @@
-__author__ = 'phoenix'
-#coding:utf-8
 from asyncore import dispatcher
 from asynchat import async_chat
-import socket
-import asyncore
+import socket, asyncore
 
 PORT = 5005
-NAME = u'Sex  Chat Room'
+NAME = 'TestChat'
 
-
-class EndSession(Exception):
-    pass
-
+class EndSession(Exception): pass
 
 class CommandHandler:
+    """
+    Simple command handler similar to cmd.Cmd from the standard library.
+    """
 
-    def unknow(self, session, cmd):
-        session.push('Unknown command: %s\r\n' % cmd)
+    def unknown(self, session, cmd):
+        'Respond to an unknown command'
+        session.push('Unknown command: {}s\r\n'.format(cmd).encode('utf-8'))
 
     def handle(self, session, line):
-        """
-        Main handle function
-        """
-        if not line.strip():
-            return
+        'Handle a received line from a given session'
+        if not line.strip(): return
+        # Split off the command:
         parts = line.split(' ', 1)
         cmd = parts[0]
+        try: line = parts[1].strip()
+        except IndexError: line = ''
+        # Try to find a handler:
+        meth = getattr(self, 'do_' + cmd, None)
         try:
-            line = parts[1].strip()
-        except IndexError:
-            line = ''
-
-        method = getattr(self, 'do_' + cmd, None)
-        try:
-            method(session, line)
+            # Assume it's callable:
+            meth(session, line)
         except TypeError:
-            self.unknow(session, cmd)
-
+            # If it isn't, respond to the unknown command:
+            self.unknown(session, cmd)
 
 class Room(CommandHandler):
     """
-    Z作为一个创建聊天室房间的基类
+    A generic environment that may contain one or more users (sessions).
+    It takes care of basic command handling and broadcasting.
     """
+
     def __init__(self, server):
         self.server = server
         self.sessions = []
 
     def add(self, session):
+        'A session (user) has entered the room'
         self.sessions.append(session)
 
     def remove(self, session):
+        'A session (user) has left the room'
         self.sessions.remove(session)
 
     def broadcast(self, line):
+        'Send a line to all sessions in the room'
         for session in self.sessions:
             session.push(line)
 
     def do_logout(self, session, line):
+        'Respond to the logout command'
         raise EndSession
-
 
 class LoginRoom(Room):
     """
-    z准备用户登录房间,但是不是正式的聊天室
+    A room meant for a single person who has just connected.
     """
 
     def add(self, session):
         Room.add(self, session)
-        self.broadcast('welcome to %s!\r\n' % self.server.name)
+        # When a user enters, greet him/her:
+        self.broadcast('Welcome to {}\r\n'.format(self.server.name).encode('utf-8'))
 
-    def unknow(self, session, cmd):
-        session.push('Please log in \n Use "login<nick>"\r\n')
+    def unknown(self, session, cmd):
+        # All unknown commands (anything except login or logout)
+        # results in a prodding:
+        session.push('Please log in\nUse "login <nick>"\r\n'.encode('utf-8'))
 
     def do_login(self, session, line):
         name = line.strip()
+        # Make sure the user has entered a name:
         if not name:
-            session.push("please enter your login name\r\n")
-        elif name in self.server.user:
-            session.push('the name "%s" is taken.\r\n' % name)
-            session.push('please try again.\r\n')
+            session.push('Please enter a name\r\n'.encode('utf-8'))
+        # Make sure that the name isn't in use:
+        elif name in self.server.users:
+            session.push('The name "{}" is taken.\r\n'.format(name).encode('utf-8'))
+            session.push('Please try again.\r\n'.encode('utf-8'))
         else:
+            # The name is OK, so it is stored in the session, and
+            # the user is moved into the main room.
             session.name = name
             session.enter(self.server.main_room)
 
-
 class ChatRoom(Room):
+    """
+    A room meant for multiple users who can chat with the others in the room.
+    """
 
     def add(self, session):
-        self.broadcast(session.name + 'has enterd the room.\r\n')
-        self.server.user[session.name] = session
-        Room.add(self,session)
+        # Notify everyone that a new user has entered:
+        self.broadcast((session.name + ' has entered the room.\r`enter code here`\n').encode('utf-8'))
+        self.server.users[session.name] = session
+        super().add(session)
 
     def remove(self, session):
         Room.remove(self, session)
-        self.broadcast(session.name + ' has left the room\r\n')
+        # Notify everyone that a user has left:
+        self.broadcast((session.name + ' has left the room.\r\n').encode('utf-8'))
 
     def do_say(self, session, line):
-        self.broadcast(session.name + ': ' + line + '\r\n')
+        self.broadcast((session.name + ': ' + line + '\r\n').encode('utf-8'))
 
     def do_look(self, session, line):
-        session.push('the following are logged in \r\n')
+        'Handles the look command, used to see who is in a room'
+        session.push('The following are in this room:\r\n'.encode('utf-8'))
         for other in self.sessions:
-            session.push(other.name + '\r\n')
+            session.push((other.name + '\r\n').encode('utf-8'))
 
     def do_who(self, session, line):
-        session.push('the following are logged in :\r\n')
-        for name in self.server.user:
-            session.push(name + '\r\n')
-
+        'Handles the who command, used to see who is logged in'
+        session.push('The following are logged in:\r\n'.encode('utf-8'))
+        for name in self.server.users:
+            session.push((name + '\r\n').encode('utf-8'))
 
 class LogoutRoom(Room):
+    """
+    A simple room for a single user. Its sole purpose is to remove the
+    user's name from the server.
+    """
 
     def add(self, session):
-        try:
-            del self.server.user[session.name]
-        except KeyError:
-            pass
-
+        # When a session (user) enters the LogoutRoom it is deleted
+        try: del self.server.users[session.name]
+        except KeyError: pass
 
 class ChatSession(async_chat):
+    """
+    A single session, which takes care of the communication with a single user.
+    """
 
-    """
-    这个类将会处理每一个客户端申请的会话，它将会所有新申请的客户端进入一个loginroom的房间内，
-    测试你的用户名以及进入聊天室的条件，
-    之后决定是否要客户端进入聊天室
-    """
     def __init__(self, server, sock):
-        async_chat.__init__(self, sock)
+        super().__init__(sock)
         self.server = server
-        self.set_terminator("\r\n")
+        self.set_terminator(b"\r\n")
         self.data = []
         self.name = None
+        # All sessions begin in a separate LoginRoom:
         self.enter(LoginRoom(server))
 
     def enter(self, room):
-        """
-        将调用这个函数的客户端添加到登录房间里面
-        """
-        try:
-            cur = self.room
-        except AttributeError:
-            pass
-        else:
-            cur.remove(self)
+        # Remove self from current room and add self to
+        # next room...
+        try: cur = self.room
+        except AttributeError: pass
+        else: cur.remove(self)
         self.room = room
         room.add(self)
 
     def collect_incoming_data(self, data):
-        self.data.append(data)
+        self.data.append(data.decode('utf-8'))
 
     def found_terminator(self):
         line = ''.join(self.data)
         self.data = []
-        try:
-            self.room.handle(self, line)
-        except EndSession:
-            self.handle_close()
+        try: self.room.handle(self, line)
+        except EndSession: self.handle_close()
 
     def handle_close(self):
         async_chat.handle_close(self)
         self.enter(LogoutRoom(self.server))
 
-
 class ChatServer(dispatcher):
     """
-    创建聊天服务器主类
+    A chat server with a single room.
     """
 
     def __init__(self, port, name):
-        dispatcher.__init__(self)
-        self.create_socket(socket.AF_INET, socket.SOCK_STREAM)     # 创建一个套接字
-        self.set_reuse_addr()                                      # 用于服务器信息的清理工作
-        self.bind(('', 5005))                                      # 将套接字绑定到指定的端口上准备监听
+        super().__init__()
+        self.create_socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.set_reuse_addr()
+        self.bind(('', port))
         self.listen(5)
         self.name = name
-        self.user = {}
+        self.users = {}
         self.main_room = ChatRoom(self)
 
     def handle_accept(self):
-        """
-        this function will accept user connection, then handle this connection
-        """
-        conn, addr = self.accept()               #conn将存储客户端的套接字，addr将存储具体的Ip地址
-        ChatSession(self, conn)                  #conn作为参数，将把此次请求的客户端交给会话类的相关函数处理
+        conn, addr = self.accept()
+        ChatSession(self, conn)
 
 if __name__ == '__main__':
     s = ChatServer(PORT, NAME)
     try:
         asyncore.loop()
     except KeyboardInterrupt:
-        print
+        print()
